@@ -201,6 +201,7 @@ public class Aplicacao extends javax.swing.JFrame {
                         .addComponent(txtdataap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
+        btncadastrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btncadastrar.setText("Cadastrar");
         btncadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
