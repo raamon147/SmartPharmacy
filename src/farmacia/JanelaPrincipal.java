@@ -12,35 +12,68 @@ import javax.swing.table.AbstractTableModel;
  * @author rssobreira
  */
 public class JanelaPrincipal extends javax.swing.JFrame {
-    
+
     Autenticacao aut = new Autenticacao();
     DAO dao = new DAO();
-    
+
+    public void listarProdutos() {
+        
+        ResultSet resultset = dao.janelaPesquisa();
+        List<Produto> produtos = new ArrayList<>();
+        try {
+            while (resultset.next()) {
+
+                String codigo = resultset.getString("Codigo");
+                String nome = resultset.getString("produto");
+                String categoria = resultset.getString("categoria");
+                String status = resultset.getString("status");
+                double preco = resultset.getDouble("preco");
+
+                Produto produto = new Produto();
+                produto.setCodigo(Integer.parseInt(codigo));
+                produto.setProduto(nome);
+                produto.setCategoria(categoria);
+                produto.setPreco(preco);
+                produto.setStatus(status);
+
+                produtos.add(produto);
+            }
+        } catch (SQLException e) {
+            System.out.println("Falha ao realizar a consulta no BD");
+        } finally {
+            jTable1.setModel(new JanelaPrincipal.TableModelProdutos(produtos));
+        }
+
+        jLabel1.setVisible(false);
+        jLabel2.setVisible(false);
+
+    }
+
     private class TableModelProdutos extends AbstractTableModel {
-        
-        private final String[] colunas = new String[]{"Codigo", "Produto", "Categoria", "Status","Preco"};
-        
+
+        private final String[] colunas = new String[]{"Codigo", "Produto", "Categoria", "Status", "Preco"};
+
         private List<Produto> produtos;
-        
+
         TableModelProdutos(List<Produto> produtos) {
             this.produtos = produtos;
         }
-        
+
         @Override
         public int getColumnCount() {
             return colunas.length;
         }
-        
+
         @Override
         public String getColumnName(int col) {
             return colunas[col];
         }
-        
+
         @Override
         public int getRowCount() {
             return produtos.size();
         }
-        
+
         @Override
         public Object getValueAt(int lin, int col) {
             if (lin > -1 && lin < produtos.size()) {
@@ -61,7 +94,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             return null;
         }
     }
-    
+
     public JanelaPrincipal() {
         initComponents();
         txtpesquisa.setText("");
@@ -74,33 +107,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         dao.limparCarrinho();
         dao.limparAplicacao();
         initComponents();
-        ResultSet resultset = dao.janelaPesquisa();
-        List<Produto> produtos = new ArrayList<>();
-        try {
-            while (resultset.next()) {
-                
-                String codigo = resultset.getString("Codigo");
-                String nome = resultset.getString("produto");
-                String categoria = resultset.getString("categoria");
-                String status = resultset.getString("status");
-                double preco = resultset.getDouble("preco");
-                
-                
-                Produto produto = new Produto();
-                produto.setCodigo(Integer.parseInt(codigo));
-                produto.setProduto(nome);
-                produto.setCategoria(categoria);
-                produto.setPreco(preco);
-                produto.setStatus(status);
-                
-                produtos.add(produto);
-            }
-        } catch (SQLException e) {
-            System.out.println("Falha ao realizar a consulta no BD");
-        } finally {
-            jTable1.setModel(new JanelaPrincipal.TableModelProdutos(produtos));
-        }
-        
+        listarProdutos();
         jLabel1.setVisible(false);
         jLabel2.setVisible(false);
     }
@@ -454,16 +461,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         ResultSet prod = dao.buscarPreco(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
         try {
             while (prod.next()) {
-                
+
                 jLabel2.setText("Preço: R$ " + prod.getString("valor"));
-                
+
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Falha ao realizar a consulta no BD");
         }
 
-        //jLabel2.setText("Preço: " +jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString());
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void txtpesquisaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtpesquisaFocusGained
@@ -481,20 +487,20 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         List<Produto> produtos = new ArrayList<>();
         try {
             while (resultset.next()) {
-                
+
                 String codigo = resultset.getString("Codigo");
                 String nome = resultset.getString("produto");
                 String categoria = resultset.getString("categoria");
                 double preco = resultset.getDouble("preco");
                 String status = resultset.getString("status");
-                
+
                 Produto produto = new Produto();
                 produto.setCodigo(Integer.parseInt(codigo));
                 produto.setProduto(nome);
                 produto.setCategoria(categoria);
                 produto.setPreco(preco);
                 produto.setStatus(status);
-                
+
                 produtos.add(produto);
             }
         } catch (SQLException e) {
@@ -537,20 +543,20 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         List<Produto> produtos = new ArrayList<>();
         try {
             while (resultset.next()) {
-                
+
                 String codigo = resultset.getString("Codigo");
                 String nome = resultset.getString("produto");
                 String categoria = resultset.getString("categoria");
                 double preco = resultset.getDouble("preco");
                 String status = resultset.getString("status");
-                
+
                 Produto produto = new Produto();
                 produto.setCodigo(Integer.parseInt(codigo));
                 produto.setProduto(nome);
                 produto.setCategoria(categoria);
                 produto.setPreco(preco);
                 produto.setStatus(status);
-                
+
                 produtos.add(produto);
             }
         } catch (SQLException e) {
@@ -563,22 +569,22 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String status = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
-        if(status.equalsIgnoreCase("Em Falta")){
+        if (status.equalsIgnoreCase("Em Falta")) {
             JOptionPane.showMessageDialog(null, "Produto em Falta!");
-        }else{
-        int code = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-        String prode = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
-        Double prece = Double.parseDouble(jTable1.getValueAt(jTable1.getSelectedRow(), 4).toString());
-        dao.inserirCarrinho(code, prode, prece);
+        } else {
+            int code = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+            String prode = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
+            Double prece = Double.parseDouble(jTable1.getValueAt(jTable1.getSelectedRow(), 4).toString());
+            dao.inserirCarrinho(code, prode, prece);
         }
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try{
-        CarrinhoCompra c = new CarrinhoCompra();
-        c.setVisible(true);
-        }catch(Exception e){
+        try {
+            CarrinhoCompra c = new CarrinhoCompra();
+            c.setVisible(true);
+        } catch (Exception e) {
             System.out.println("");
         }
         // TODO add your handling code here:
@@ -606,7 +612,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         Status s = new Status();
         s.setVisible(true);
-        
+
 // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 

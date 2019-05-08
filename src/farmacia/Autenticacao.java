@@ -109,7 +109,8 @@ public class Autenticacao extends javax.swing.JFrame {
                 jPasswordField1.setText("");
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "Senha Invalida");
+                JOptionPane.showMessageDialog(null, "Dados Invalidos");
+                
             }
         } catch (SQLException e) {
 

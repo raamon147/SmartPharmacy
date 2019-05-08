@@ -15,9 +15,7 @@ public class AdicionarProdutos extends javax.swing.JFrame {
 
     DAO dao = new DAO();
 
-    /**
-     * Creates new form AdicionarProdutoss
-     */
+
     public AdicionarProdutos() {
         initComponents();
     }
