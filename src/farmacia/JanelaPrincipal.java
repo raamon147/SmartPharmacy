@@ -420,14 +420,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         AdicionarProdutos adi = new AdicionarProdutos();
-        aut.autenticar(adi);
+        aut.setJanela(adi);
         aut.setVisible(true);
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         EditarProdutos ed = new EditarProdutos();
-        aut.autenticar(ed);
+        aut.setJanela(ed);
         aut.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -444,7 +444,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         CadastrarVendedor cad = new CadastrarVendedor();
-        aut.autenticar(cad);
+        aut.setJanela(cad);
         aut.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
@@ -519,7 +519,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         CadastrarGerente gen = new CadastrarGerente();
-        aut.autenticar(gen);
+        aut.setJanela(gen);
         aut.setVisible(true);
 
 // TODO add your handling code here:
@@ -527,7 +527,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         RemoverGerente rmvg = new RemoverGerente();
-        aut.autenticar(rmvg);
+        aut.setJanela(rmvg);
         aut.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem8ActionPerformed
@@ -605,7 +605,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         CadastrarConvenio cdc = new CadastrarConvenio();
-        aut.autenticar(cdc);
+        aut.setJanela(cdc);
         aut.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 

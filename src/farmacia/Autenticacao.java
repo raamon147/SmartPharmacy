@@ -27,7 +27,7 @@ public class Autenticacao extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void autenticar(JFrame x) {
+    public void setJanela(JFrame x) {
         janela = x;
     }
 
