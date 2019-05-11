@@ -591,6 +591,7 @@ public class CarrinhoCompra extends javax.swing.JFrame {
             try {
                 if (desconto > total) {
                     JOptionPane.showMessageDialog(null, "O desconto não pode ser maior que o valor final");
+                    desconto = 0.0;
                 } else {
 
                     total = total - desconto;
