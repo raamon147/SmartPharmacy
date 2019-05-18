@@ -153,7 +153,7 @@ public class EditarProdutos extends javax.swing.JFrame {
         int codigo = Integer.parseInt(jTextField1.getText());
         String produto = jTextField2.getText();
         double preco = Double.parseDouble(jTextField3.getText());
-        String categoria = jComboBox1.getSelectedItem().toString();
+        int categoria = jComboBox1.getSelectedIndex()+1;
         dao.alterar(produto, preco, categoria, codigo);
         jTextField1.setText("");
         jTextField2.setText("");
@@ -169,7 +169,7 @@ public class EditarProdutos extends javax.swing.JFrame {
 
                 jTextField2.setText(prod.getString("produto"));
                 jTextField3.setText(prod.getString("preco"));
-                jComboBox1.setSelectedItem(prod.getString("categoria"));
+                jComboBox1.setSelectedItem(prod.getString("c.descricao"));
 
             }
         } catch (SQLException e) {

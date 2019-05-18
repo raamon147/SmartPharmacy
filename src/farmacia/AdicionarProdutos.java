@@ -175,7 +175,7 @@ public class AdicionarProdutos extends javax.swing.JFrame {
         try{
         int codigo = Integer.parseInt(txtcodigo.getText());
         String produto = txtproduto.getText();
-        String categoria = jcombocateg.getSelectedItem().toString();
+        int categoria = jcombocateg.getSelectedIndex()+1;
         float preco = Float.parseFloat(txtpreco.getText());
         String status;
         if(jRadioButton1.isSelected()){

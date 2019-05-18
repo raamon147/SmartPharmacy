@@ -17,32 +17,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     DAO dao = new DAO();
 
     public void listarProdutos() {
-        
-        ResultSet resultset = dao.janelaPesquisa();
-        List<Produto> produtos = new ArrayList<>();
-        try {
-            while (resultset.next()) {
 
-                String codigo = resultset.getString("Codigo");
-                String nome = resultset.getString("produto");
-                String categoria = resultset.getString("categoria");
-                String status = resultset.getString("status");
-                double preco = resultset.getDouble("preco");
-
-                Produto produto = new Produto();
-                produto.setCodigo(Integer.parseInt(codigo));
-                produto.setProduto(nome);
-                produto.setCategoria(categoria);
-                produto.setPreco(preco);
-                produto.setStatus(status);
-
-                produtos.add(produto);
-            }
-        } catch (SQLException e) {
-            System.out.println("Falha ao realizar a consulta no BD");
-        } finally {
-            jTable1.setModel(new JanelaPrincipal.TableModelProdutos(produtos));
-        }
+        ArrayList<Produto> produtos = dao.janelaPesquisa();
+        jTable1.setModel(new JanelaPrincipal.TableModelProdutos(produtos));
 
         jLabel1.setVisible(false);
         jLabel2.setVisible(false);
@@ -490,7 +467,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
                 String codigo = resultset.getString("Codigo");
                 String nome = resultset.getString("produto");
-                String categoria = resultset.getString("categoria");
+                String categoria = resultset.getString("c.descricao");
                 double preco = resultset.getDouble("preco");
                 String status = resultset.getString("status");
 
@@ -534,37 +511,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String texto = txtpesquisa.getText();
-        ResultSet resultset;
         if (jComboBox1.getSelectedItem().toString().equals("Todos")) {
-            resultset = dao.janelaPesquisa();
-        } else {
-            resultset = dao.filtrarCategoria(texto, jComboBox1.getSelectedItem().toString());
-        }
-        List<Produto> produtos = new ArrayList<>();
-        try {
-            while (resultset.next()) {
-
-                String codigo = resultset.getString("Codigo");
-                String nome = resultset.getString("produto");
-                String categoria = resultset.getString("categoria");
-                double preco = resultset.getDouble("preco");
-                String status = resultset.getString("status");
-
-                Produto produto = new Produto();
-                produto.setCodigo(Integer.parseInt(codigo));
-                produto.setProduto(nome);
-                produto.setCategoria(categoria);
-                produto.setPreco(preco);
-                produto.setStatus(status);
-
-                produtos.add(produto);
-            }
-        } catch (SQLException e) {
-            System.out.println("Falha ao realizar a consulta no BD");
-        } finally {
+            ArrayList<Produto> produtos = dao.janelaPesquisa();
             jTable1.setModel(new JanelaPrincipal.TableModelProdutos(produtos));
+        } else {
+            ArrayList<Produto> produtos = dao.filtrarCategoria(texto, jComboBox1.getSelectedItem().toString());
+            jTable1.setModel(new JanelaPrincipal.TableModelProdutos(produtos));
+
         }
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

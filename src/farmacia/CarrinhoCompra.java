@@ -181,7 +181,7 @@ public class CarrinhoCompra extends javax.swing.JFrame {
         jList2 = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnremover = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -189,9 +189,9 @@ public class CarrinhoCompra extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnconv = new javax.swing.JButton();
+        btngerente = new javax.swing.JButton();
+        btnfidelidade = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -260,15 +260,15 @@ public class CarrinhoCompra extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 149, 423, 190));
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 423, 190));
 
-        jButton1.setText("Remover Item");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnremover.setText("Remover Item");
+        btnremover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnremoverActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, 170, 36));
+        getContentPane().add(btnremover, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, 170, 36));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Carrinho de Compras");
@@ -328,29 +328,29 @@ public class CarrinhoCompra extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, -1, 85));
 
-        jButton2.setText("Desconto Convenios");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnconv.setText("Desconto Convenios");
+        btnconv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnconvActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 11, 170, 30));
+        getContentPane().add(btnconv, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 11, 170, 30));
 
-        jButton4.setText("Desconto Gerente");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btngerente.setText("Desconto Gerente");
+        btngerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btngerenteActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 98, 170, 31));
+        getContentPane().add(btngerente, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 98, 170, 31));
 
-        jButton5.setText("Desconto CF");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnfidelidade.setText("Desconto CF");
+        btnfidelidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnfidelidadeActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 52, 170, 31));
+        getContentPane().add(btnfidelidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 52, 170, 31));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Convenios Parceiros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -463,9 +463,9 @@ public class CarrinhoCompra extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 11, -1, 130));
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 11, 150, 150));
 
-        setSize(new java.awt.Dimension(632, 393));
+        setSize(new java.awt.Dimension(640, 434));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -482,7 +482,7 @@ public class CarrinhoCompra extends javax.swing.JFrame {
 // TODO add your handling code here:
     }//GEN-LAST:event_formWindowGainedFocus
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnremoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnremoverActionPerformed
         try {
             int cod = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
             dao.removerItemCarrinho(cod);
@@ -494,7 +494,7 @@ public class CarrinhoCompra extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Adicione produtos ao carrinho, para poder remove-los");
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnremoverActionPerformed
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
 
@@ -527,7 +527,8 @@ public class CarrinhoCompra extends javax.swing.JFrame {
                 total -= (total / 100) * porcentagem;
                 jLabel1.setText("R$ " + total);
                 jPanel2.setVisible(false);
-                jButton4.setText("Desconto Incluido");
+                btngerente.setText("Desconto Incluido");
+                btngerente.setEnabled(false);
             } else {
                 JOptionPane.showMessageDialog(null, "Desconto Invalido");
             }
@@ -537,21 +538,24 @@ public class CarrinhoCompra extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if (!jButton4.getText().equals("Desconto Incluido")) {
+    private void btngerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngerenteActionPerformed
+        if (!btngerente.getText().equals("Desconto Incluido")) {
             jPanel2.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "O desconto so pode ser aplicado uma vez");
             total = total - ((total / 100) * porcentagem);
             jLabel1.setText("R$ " + total);
+            
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+        
+       
+    }//GEN-LAST:event_btngerenteActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnconvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnconvActionPerformed
         jPanel3.setVisible(true);
-        this.setSize(900, 400);
+        this.setSize(920, 430);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnconvActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         try {
@@ -559,17 +563,17 @@ public class CarrinhoCompra extends javax.swing.JFrame {
             total -= (total / 100) * porcentagem;
             jLabel1.setText("R$ " + total);
             jPanel3.setVisible(false);
-            this.setSize(630, 400);
+            this.setSize(650, 430);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Selecione o convenio");
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnfidelidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnfidelidadeActionPerformed
         jPanel4.setVisible(true);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnfidelidadeActionPerformed
 
     private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
         String cpf = jTextField2.getText();
@@ -597,6 +601,8 @@ public class CarrinhoCompra extends javax.swing.JFrame {
                     total = total - desconto;
                     jLabel1.setText("R$ " + total);
                     jButton7.setText("Ja Aplicado");
+                    btnfidelidade.setEnabled(false);
+                    jButton7.setEnabled(false);
 
                 }
             } catch (Exception e) {
@@ -647,11 +653,11 @@ public class CarrinhoCompra extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnconv;
+    private javax.swing.JButton btnfidelidade;
+    private javax.swing.JButton btngerente;
+    private javax.swing.JButton btnremover;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;

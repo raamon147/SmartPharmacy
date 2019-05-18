@@ -24,13 +24,13 @@ public class Relatorios extends javax.swing.JFrame {
         
     }
     public void buscarRel(){
-        String data = "Produto(s) mais caro(s): \n";
+        String data = "Produto(s) mais caro(s): \n\n";
         ResultSet prod = d.produtoMaisCaro();
         try {
             while(prod.next()){
             
           
-           data += prod.getString("produto")+ " R$"+ prod.getString("preco")+"\n";
+           data += prod.getString("produto")+"\nCategoria: "+ prod.getString("descricao") +"\n"+ "Preço R$"+ prod.getString("preco")+"\n\n";
            jTextArea1.setText(data);
         
             }

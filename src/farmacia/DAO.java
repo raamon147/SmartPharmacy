@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class DAO {
@@ -12,16 +13,16 @@ public class DAO {
     private PreparedStatement pstmt;
     private ResultSet rs;
 
-    public void inserir(int codigo, String produto, double preco, String categoria,String status) {
+    public void inserir(int codigo, String produto, double preco, int categoria, String status) {
         Conexao conexao = new Conexao();
         conn = conexao.conectar();
         try {
-            String inserir = "INSERT INTO produto (codigo, produto, preco, categoria,status) VALUES (?, ?, ?, ?,?)";
+            String inserir = "INSERT INTO produto (codigo, produto, preco,id_categoria,status) VALUES (?, ?, ?, ?,?)";
             pstmt = conn.prepareStatement(inserir);
             pstmt.setInt(1, codigo);
             pstmt.setString(2, produto);
             pstmt.setDouble(3, preco);
-            pstmt.setString(4, categoria);
+            pstmt.setInt(4, categoria);
             pstmt.setString(5, status);
             pstmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Produto Adicionado");
@@ -31,15 +32,15 @@ public class DAO {
 
     }
 
-    public void alterar(String produto, double preco, String categoria, int codigo) {
+    public void alterar(String produto, double preco, int id_categoria, int codigo) {
         Conexao conexao = new Conexao();
         conn = conexao.conectar();
         try {
-            String alterar = "UPDATE produto SET produto = ?, preco = ?, categoria = ?  WHERE codigo = ?;";
+            String alterar = "UPDATE produto SET produto = ?, preco = ?, id_categoria = ?  WHERE codigo = ?;";
             pstmt = conn.prepareStatement(alterar);
             pstmt.setString(1, produto);
             pstmt.setDouble(2, preco);
-            pstmt.setString(3, categoria);
+            pstmt.setInt(3, id_categoria);
             pstmt.setInt(4, codigo);
             pstmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Produto Alterado com sucesso");
@@ -73,7 +74,7 @@ public class DAO {
         Conexao conexao = new Conexao();
         conn = conexao.conectar();
         try {
-            pstmt = conn.prepareStatement("SELECT * FROM produto WHERE produto like ?");
+            pstmt = conn.prepareStatement("SELECT * from produto p inner join categoria c on p.id_categoria = c.id_categoria WHERE produto like ?");
             pstmt.setString(1, "%" + produto + "%");
             rs = pstmt.executeQuery();
             return rs;
@@ -100,7 +101,7 @@ public class DAO {
         Conexao conexao = new Conexao();
         conn = conexao.conectar();
         try {
-            pstmt = conn.prepareStatement("SELECT * FROM produto WHERE codigo = ?");
+            pstmt = conn.prepareStatement("SELECT * FROM produto p inner join categoria c on p.id_categoria = c.id_categoria WHERE codigo = ?");
             pstmt.setInt(1, codigo);
             rs = pstmt.executeQuery();
             return rs;
@@ -162,25 +163,46 @@ public class DAO {
         }
     }
 
-    public ResultSet janelaPesquisa() {
+    public ArrayList<Produto> janelaPesquisa() {
+        ArrayList<Produto> produtos = new ArrayList<>();
         Conexao conexao = new Conexao();
         conn = conexao.conectar();
         try {
-            pstmt = conn.prepareStatement("SELECT * from produto");
+            pstmt = conn.prepareStatement("SELECT * from produto p inner join categoria c on p.id_categoria = c.id_categoria");
             rs = pstmt.executeQuery();
-            return rs;
+            while (rs.next()) {
+
+                String codigo = rs.getString("Codigo");
+                String nome = rs.getString("produto");
+                String categoria = rs.getString("c.descricao");
+                String status = rs.getString("status");
+                double preco = rs.getDouble("preco");
+
+                Produto produto = new Produto();
+                produto.setCodigo(Integer.parseInt(codigo));
+                produto.setProduto(nome);
+                produto.setCategoria(categoria);
+                produto.setPreco(preco);
+                produto.setStatus(status);
+                produtos.add(produto);
+            }
+
+            pstmt.close();
+            rs.close();
+            conn.close();
         } catch (SQLException e) {
-            conexao.desconectar();
-            JOptionPane.showMessageDialog(null, "codigo inexistente");
-            return null;
+            System.out.println("Falha ao realizar a consulta no BD");
+
         }
+        return produtos;
+
     }
 
     public ResultSet produtoMaisCaro() {
         Conexao conexao = new Conexao();
         conn = conexao.conectar();
         try {
-            pstmt = conn.prepareStatement("select produto, preco from produto where codigo in (select codigo from produto where preco = (select max(preco) from produto))");
+            pstmt = conn.prepareStatement("select produto,descricao,preco from produto p inner join categoria c on p.id_categoria = c.id_categoria where codigo in (select codigo from produto where preco = (select max(preco) from produto))");
             rs = pstmt.executeQuery();
             return rs;
         } catch (SQLException e) {
@@ -292,20 +314,41 @@ public class DAO {
 
     }
 
-    public ResultSet filtrarCategoria(String produto, String categoria) {
+    public ArrayList<Produto> filtrarCategoria(String produtoo, String categoriaa) {
+        ArrayList<Produto> produtos = new ArrayList<>();
         Conexao conexao = new Conexao();
         conn = conexao.conectar();
         try {
-            pstmt = conn.prepareStatement("SELECT * FROM produto WHERE produto like ? and categoria = ?");
-            pstmt.setString(1, "%" + produto + "%");
-            pstmt.setString(2, categoria);
+            pstmt = conn.prepareStatement("SELECT * from produto p inner join categoria c on p.id_categoria = c.id_categoria where p.produto like ? and c.descricao = ?");
+            pstmt.setString(1, "%" + produtoo + "%");
+            pstmt.setString(2, categoriaa);
             rs = pstmt.executeQuery();
-            return rs;
+            while (rs.next()) {
+
+                String codigo = rs.getString("Codigo");
+                String nome = rs.getString("produto");
+                String categoria = rs.getString("c.descricao");
+                String status = rs.getString("status");
+                double preco = rs.getDouble("preco");
+
+                Produto produto = new Produto();
+                produto.setCodigo(Integer.parseInt(codigo));
+                produto.setProduto(nome);
+                produto.setCategoria(categoria);
+                produto.setPreco(preco);
+                produto.setStatus(status);
+                produtos.add(produto);
+            }
+
+            pstmt.close();
+            rs.close();
+            conn.close();
         } catch (SQLException e) {
-            conexao.desconectar();
-            JOptionPane.showMessageDialog(null, "codigo inexistente");
-            return null;
+            System.out.println("Falha ao realizar a consulta no BD");
+
         }
+        return produtos;
+
     }
 
     public void inserirCarrinho(int codigo, String produto, double preco) {
@@ -453,7 +496,8 @@ public class DAO {
             return null;
         }
     }
-        public void alterarStatus(int codigo,String status) {
+
+    public void alterarStatus(int codigo, String status) {
         Conexao conexao = new Conexao();
         conn = conexao.conectar();
         try {
@@ -467,6 +511,7 @@ public class DAO {
             JOptionPane.showMessageDialog(null, "Falha na alteração: " + e.getMessage());
         }
     }
+
     public ResultSet getSaldoPontos(String cpf) {
         Conexao conexao = new Conexao();
         conn = conexao.conectar();
